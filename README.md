@@ -29,6 +29,6 @@ https://blo.app.lonay.me/ob/[房间号/用户UUID]/
 - 使用了Vue.js，并使用Vue-CLI手脚架进行搭建
 - 使用了Vue官方的Vuex、Vue-Router来进行集成式状态管理和前端路由
 - 在HTTP请求上使用了Axios
-
 - [ ] 可以自行将本项目移植至vue-electron/Electron，请自行解决登陆问题
     - 敬告：本项目是基于B站官方公开的API进行请求，并且依赖B站官方Cookie。请跳转至官方的登陆页面来解决登陆问题; 请不要采集、使用任何B站官方的用户数据
+- 所有数据来自于B站官方正在使用的API。

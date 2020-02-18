@@ -8,7 +8,23 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: () => import('@/views/main')
-        }
+            component: () => import('@/views/main'),
+        },
+        {
+            path: '/ob/:id',
+            component: () => import('@/views/ob'),
+        },
+        {
+            path: '/list',
+            component: () => import('@/views/list'),
+        },
+        {
+            path: '/docs',
+            component: () => import('@/views/doc'),
+        },
+        {
+            path: '*',
+            redirect: '/',
+        },
     ]
 })
