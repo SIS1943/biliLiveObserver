@@ -8,7 +8,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: () => import('@/views/main'),
+            component: () => import('@/views/index'),
         },
         {
             path: '/ob/:id',
@@ -19,8 +19,8 @@ export default new Router({
             component: () => import('@/views/list'),
         },
         {
-            path: '/docs',
-            component: () => import('@/views/doc'),
+            path: '/setting',
+            component: () => import('@/views/setting'),
         },
         {
             path: '*',

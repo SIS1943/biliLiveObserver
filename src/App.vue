@@ -11,7 +11,7 @@
       >
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-app-bar-nav-icon v-show="$route.path != '/'" to="/" v-on="on">
+            <v-app-bar-nav-icon v-show="$route.path != '/'" to="/" v-on="on" >
               <v-icon>mdi-home</v-icon>
             </v-app-bar-nav-icon>
           </template>
@@ -23,11 +23,11 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on" to="/docs">
-              <v-icon>mdi-file-document-outline</v-icon>
+            <v-btn icon v-on="on" to="/setting">
+              <v-icon>mdi-cogs</v-icon>
             </v-btn>
           </template>
-          <span>使用说明</span>
+          <span>设置</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
@@ -81,7 +81,7 @@
       >
         <router-view></router-view>
       </v-sheet>
-      <v-snackbar v-model="snackbar" top>{{ snacktext }}</v-snackbar>
+      <v-snackbar v-model="snackbar" bottom right>{{ snacktext }}</v-snackbar>
     </v-card>
   </v-app>
 </template>
