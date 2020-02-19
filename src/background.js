@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, Menu } from 'electron'
+import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron'
 import {
   createProtocol,
   /* installVueDevtools */
@@ -12,25 +12,37 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 let win
 
 // Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
+protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }])
 
-function createWindow () {
+
+function createWindow() {
   Menu.setApplicationMenu(null)
   // Create the browser window.
-  win = new BrowserWindow({ 
+  win = new BrowserWindow({
     width: 1022,
     height: 650,
     fullscreenable: false,
-    minimizable:false,
-    maximizable:false,
-    resizable:false,
+    minimizable: false,
+    maximizable: false,
+    resizable: false,
     frame: false,
     webPreferences: {
       //devTools: false,
       nodeIntegration: true,
       webSecurity: false,
       webviewTag: true,
-  } })
+    }
+  })
+
+  ipcMain.on('min', () => win.minimize());
+  ipcMain.on('max', () => {
+    if (win.isMaximized()) {
+      win.unmaximize()
+    } else {
+      win.maximize()
+    }
+  });
+  ipcMain.on('close', () => win.close());
 
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -40,7 +52,7 @@ function createWindow () {
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    win.loadURL('app://./index.html',{httpReferrer: 'no-referrer'})
+    win.loadURL('app://./index.html', { httpReferrer: 'no-referrer' })
   }
 
   win.webContents.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.88 Safari/537.36')

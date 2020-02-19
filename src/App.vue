@@ -9,42 +9,44 @@
         scroll-target="#scrolling-techniques-7"
         class="app-nav"
       >
-        <v-app-bar-nav-icon v-show="$route.path != '/'" to="/"><v-icon>mdi-home</v-icon></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon v-show="$route.path != '/'" to="/">
+          <v-icon>mdi-home</v-icon>
+        </v-app-bar-nav-icon>
 
         <v-toolbar-title>BiliLiveObserver</v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <v-tooltip left>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on" @click="onWebsite('https://passport.bilibili.com/login', true)">
-              <v-icon style="margin-top: 3px;">iconfont icon-bilibili4</v-icon>
-            </v-btn>
-          </template>
-          <span>Open bilibili.com with app.</span>
-        </v-tooltip>
-        <v-tooltip left>
+        <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" to="/docs">
               <v-icon>mdi-file-document-outline</v-icon>
             </v-btn>
           </template>
-          <span>Document.</span>
+          <span>使用说明</span>
         </v-tooltip>
-        <v-tooltip left>
+        <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" disabled>
               <v-icon>mdi-translate</v-icon>
             </v-btn>
           </template>
-          <span>Set app language.</span>
+          <span>地区与语言</span>
         </v-tooltip>
-        <v-tooltip left>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on" @click="minisizeApp()">
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+          <span>最小化</span>
+        </v-tooltip>
+        <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" @click="exitApp()">
               <v-icon>mdi-exit-to-app</v-icon>
             </v-btn>
           </template>
-          <span>Exit app.</span>
+          <span>关闭</span>
         </v-tooltip>
       </v-app-bar>
       <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -74,45 +76,52 @@
       >
         <router-view></router-view>
       </v-sheet>
+      <v-snackbar v-model="snackbar" top>
+        {{ snacktext }}
+      </v-snackbar>
     </v-card>
   </v-app>
 </template>
 
 <script>
-import axios from 'axios-jsonp-pro'
-const { app, BrowserWindow} = require('electron').remote
+const req = require("request");
+const { BrowserWindow, ipcRenderer: ipc } = require("electron");
 export default {
   name: "App",
   data() {
     return {
-      drawer: false
+      drawer: false,
+      snackbar: false,
+      snacktext: "Information.",
     };
   },
   components: {},
-  methods:{
-    exitApp(){
-      app.exit(0);
+  methods: {
+    exitApp() {
+      ipc.send('close')
     },
-    onWebsite(url, isNewWindow = false){
+    minisizeApp(){
+      ipc.send('min')
+    },
+    onWebsite(url, isNewWindow = false) {
       isNewWindow;
-      let win = new BrowserWindow({ width: 1280, height: 720, titleBarStyle: 'hidden'})
-      win.loadURL(url)
+      let win = new BrowserWindow({
+        width: 1280,
+        height: 720,
+        titleBarStyle: "hidden"
+      });
+      win.loadURL(url);
     }
   },
-  created(){
-    // setInterval(() => {
-    //   this.$store.dispatch('setTimer', 1);
-    // }, 10);
-    axios.jsonp('https://api.live.bilibili.com/sign/GetSignInfo',{
-      headers:{
-        Referer: 'https://api.live.bilibili.com'
+  created() {
+    req("https://api.live.bilibili.com/sign/GetSignInfo", (e, r, b) => {
+      b = JSON.parse(b)
+      console.log(b)
+      if (b.code != 0) {
+        this.snacktext = "账号未登陆，可能会影响到部分功能的使用。"
+        this.snackbar = true
       }
-    })
-      .then((r)=>{
-        if(r.data.code == -101){
-//
-        }
-      })
+    });
   }
 };
 </script>
@@ -146,15 +155,16 @@ html {
   overflow-y: auto;
   overflow-y: hidden !important;
 }
-.app-nav{
-  user-select:none;
+.app-nav {
+  user-select: none;
   -webkit-app-region: drag;
 }
-.app-nav a, .app-nav button{
+.app-nav a,
+.app-nav button {
   -webkit-app-region: no-drag;
 }
 .app-view {
-  height: calc(100% - 64px);;
+  height: calc(100% - 64px);
   margin-top: 64px;
   padding: 16px;
 }

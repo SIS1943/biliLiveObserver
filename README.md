@@ -13,3 +13,4 @@
 - 使用了 vue-cli-plugin-electron-builder 插件，可以直接在Vue-cli手脚架中直接编译项目。
     - 仅在Windows 10 1909下进行过编译
     - Win平台下请确保 `C:\Users\<Username>\AppData\Local\electron-builder\Cache`目录下有 `nsis\nsis-3.0.3.2` 、 `nsis\nsis-resources-3.4.1` 、 `WinCodeSign\winCodeSign-2.5.0` 。（可能天朝国内网络环境无法下载，自行寻找8）
+- 直播流的播放使用了 bilibili 开源的 `flv.js`

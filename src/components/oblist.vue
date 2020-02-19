@@ -30,8 +30,8 @@ export default {
 }
 .app-obcard .obc-content h5{
   display: inline-block;
-  white-space: nowrap; 
-  width: 100%; 
+  white-space: nowrap;
+  width: 100%;
   overflow: hidden;
   text-overflow:ellipsis;
 }
@@ -43,7 +43,6 @@ export default {
   font-size: 1rem !important;
 }
 .app-obcard .v-responsive{
-    
 }
 .app-obcard .v-responsive__content {
   background-image: linear-gradient(0deg, black, transparent);
