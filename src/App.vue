@@ -16,6 +16,14 @@
         <v-spacer></v-spacer>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on" @click="onWebsite('https://passport.bilibili.com/login', true)">
+              <v-icon>iconfont icon-bilibili4</v-icon>
+            </v-btn>
+          </template>
+          <span>Open with Bilibili website.</span>
+        </v-tooltip>
+        <v-tooltip left>
+          <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" to="/docs">
               <v-icon>mdi-file-document-outline</v-icon>
             </v-btn>
@@ -32,15 +40,7 @@
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
-              <v-icon>mdi-code-tags</v-icon>
-            </v-btn>
-          </template>
-          <span>View code in Github.</span>
-        </v-tooltip>
-        <v-tooltip left>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
+            <v-btn icon v-on="on" @click="exitApp()">
               <v-icon>mdi-exit-to-app</v-icon>
             </v-btn>
           </template>
@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import axios from 'axios-jsonp-pro'
+const { app, BrowserWindow} = require('electron').remote
 export default {
   name: "App",
   data() {
@@ -87,10 +89,30 @@ export default {
     };
   },
   components: {},
+  methods:{
+    exitApp(){
+      app.exit(0);
+    },
+    onWebsite(url, isNewWindow = false){
+      isNewWindow;
+      let win = new BrowserWindow({ width: 1280, height: 720, titleBarStyle: 'hidden'})
+      win.loadURL(url)
+    }
+  },
   created(){
     // setInterval(() => {
     //   this.$store.dispatch('setTimer', 1);
     // }, 10);
+    axios.jsonp('https://api.live.bilibili.com/sign/GetSignInfo',{
+      headers:{
+        Referer: 'https://api.live.bilibili.com'
+      }
+    })
+      .then((r)=>{
+        if(r.data.code == -101){
+//
+        }
+      })
   }
 };
 </script>
@@ -116,17 +138,9 @@ export default {
 html {
   overflow-y: hidden !important;
 }
-#app .v-application--wrap {
+.app-window {
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(95, 95, 95);
-}
-.app-window {
-  height: 70%;
-  width: 1080px;
   background-color: white;
   color: rgb(20, 20, 20);
   overflow-y: auto;
@@ -134,6 +148,10 @@ html {
 }
 .app-nav{
   user-select:none;
+  -webkit-app-region: drag;
+}
+.app-nav a, .app-nav button{
+  -webkit-app-region: no-drag;
 }
 .app-view {
   height: calc(100% - 64px);;
