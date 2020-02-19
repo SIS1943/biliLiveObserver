@@ -28,6 +28,20 @@ export default {
     align-items: flex-end;
     justify-content: space-between;
 }
+.app-obcard .obc-content h5{
+  display: inline-block;
+  white-space: nowrap; 
+  width: 100%; 
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.app-obcard .obc-content>div>span{
+  font-size: .8rem;
+  color: rgb(114, 114, 114);
+}
+.app-obcard .obc-content button{
+  font-size: 1rem !important;
+}
 .app-obcard .v-responsive{
     
 }

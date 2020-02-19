@@ -11,16 +11,16 @@
       >
         <v-app-bar-nav-icon v-show="$route.path != '/'" to="/"><v-icon>mdi-home</v-icon></v-app-bar-nav-icon>
 
-        <v-toolbar-title>BiliLiveObserver - Online</v-toolbar-title>
+        <v-toolbar-title>BiliLiveObserver</v-toolbar-title>
 
         <v-spacer></v-spacer>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" @click="onWebsite('https://passport.bilibili.com/login', true)">
-              <v-icon>iconfont icon-bilibili4</v-icon>
+              <v-icon style="margin-top: 3px;">iconfont icon-bilibili4</v-icon>
             </v-btn>
           </template>
-          <span>Open with Bilibili website.</span>
+          <span>Open bilibili.com with app.</span>
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
@@ -32,7 +32,7 @@
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
+            <v-btn icon v-on="on" disabled>
               <v-icon>mdi-translate</v-icon>
             </v-btn>
           </template>

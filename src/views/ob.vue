@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="4">
         <v-row style="margin: -12px;">
-          <v-col>
+          <v-col cols="12">
             <v-card>
               <v-card-title>
                 <h4>OB>观测者</h4>
@@ -17,7 +17,12 @@
           </v-col>
           <v-col>
             <v-card>
-              <v-img class="white--text align-end" height="162px" :src="obInfo.userImg">
+              <v-img
+                class="white--text align-end"
+                :src="'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
+                position="center"
+                :aspect-ratio="16/9"
+              >
                 <v-card-title>{{obInfo.title}}</v-card-title>
               </v-img>
               <v-card-text>
@@ -58,6 +63,7 @@
 
 <script>
 import axios from "axios-jsonp-pro";
+var hrequest = require('request');
 
 export default {
   name: "BLO_V-MAIN",
@@ -75,28 +81,36 @@ export default {
         live_time: "2020-02-17 20:20:30",
         userImg: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       },
+      obReqData: "",
       obNum: 0
     };
   },
   mounted() {
     this.obNum++;
-    axios
-      .get(
-        "https://api.live.bilibili.com/room/v1/Room/get_info?room_id=" +
-          this.oid
-      )
-      .then(r => {
-        let oi = this.obInfo;
-        let d = r.data.data;
-        oi.title = d.title;
-        oi.isLive = d.live_status == 1 ? true : false;
-        oi.parent_area_name = d.parent_area_name;
-        oi.area_name = d.area_name;
-        oi.room_id = d.room_id;
-        oi.live_time = d.live_time;
-        oi.userImg = d.user_cover;
-        oi.live_url = this.getLiveUri(this.obInfo.room_id);
-      });
+
+    // axios
+    //   .get(
+    //     "https://api.live.bilibili.com/room/v1/Room/get_info?room_id=" +
+    //       this.oid
+    //   )
+    //   .then(r => {
+    //     let oi = this.obInfo;
+    //     let d = r.data.data;
+    //     oi.title = d.title;
+    //     oi.isLive = d.live_status == 1 ? true : false;
+    //     oi.parent_area_name = d.parent_area_name;
+    //     oi.area_name = d.area_name;
+    //     oi.room_id = d.room_id;
+    //     oi.live_time = d.live_time;
+    //     oi.userImg = d.user_cover;
+    //     oi.live_url = this.getLiveUri(this.obInfo.room_id);
+    //   });
+    //let self = this;
+    hrequest('https://api.live.bilibili.com/room/v1/Room/playUrl?cid=5441&quality=4&platform=web&otype=json', (error, response, body) => {
+      console.log('======>')
+      console.log(JSON.parse(body));
+    })
+
     let time = this.$store.state.OB_Time * 1000;
     const observer = setInterval(() => {
       this.obNum++;
@@ -106,21 +120,25 @@ export default {
     });
   },
   methods: {
-    getLiveUri(oid){
-      axios.get('/api/bili/room/getPlayUrl',{
-        params:{
-          cid: oid,
-          qn: 0,
-          platform: 'web'
-        },
-      })
-      .then((r)=>{
-        return r.data.data.durl[0].url
-      })
-      .catch((e)=>{
-        return 'Error:'+e;
-      })
+    getLiveUri(oid) {
+      axios
+        .get("/api/bili/room/getPlayUrl", {
+          params: {
+            cid: oid,
+            qn: 0,
+            platform: "web"
+          }
+        })
+        .then(r => {
+          return r.data.data.durl[0].url;
+        })
+        .catch(e => {
+          return "Error:" + e;
+        });
     }
+  },
+  getLiveCoverImg(oid) {
+    oid;
   }
 };
 </script>

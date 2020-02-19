@@ -2,7 +2,8 @@
   <v-card class="mx-auto" max-width="400">
     <v-img
       class="white--text align-end"
-      height="152px"
+      position="center"
+      :aspect-ratio="16/9"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
       <v-card-subtitle style="color:#FFFFFF55;">观测ID: {{obid}}</v-card-subtitle>
@@ -12,7 +13,7 @@
         <v-icon dark>mdi-account-circle</v-icon>
       </v-avatar>
       <div style="margin:0 8px;width:100%">
-          <h4>直播间标题</h4>
+          <h5>直播间标题</h5>
           <span>主播</span>
       </div>
       <v-btn depressed small color="primary" :to="`/ob/${obid}`">详情 <v-icon small>mdi-arrow-right</v-icon></v-btn>
