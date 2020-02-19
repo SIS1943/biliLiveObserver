@@ -19,8 +19,8 @@ function createWindow() {
   Menu.setApplicationMenu(null)
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1022,
-    height: 650,
+    width: 1122,
+    height: 700,
     fullscreenable: false,
     minimizable: false,
     maximizable: false,

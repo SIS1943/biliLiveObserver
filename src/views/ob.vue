@@ -39,18 +39,12 @@
         <v-row style="margin: -12px;">
           <v-col cols="12">
             <v-card>
-              <v-card-title>
-                <span>生放送</span>
-              </v-card-title>
-              <v-divider></v-divider>
-              <v-card-text>
-                <video id="videoElement" controls muted autoplay width="100%"></video>
-              </v-card-text>
-              <v-divider></v-divider>
+              <!--LivePlayer!-->
+              <video id="videoElement" controls muted autoplay width="100%"></video>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn depressed color="primary">原直播间</v-btn>
-                <v-btn depressed color="primary">缓存直播</v-btn>
+                <v-btn depressed color="primary">缓存直播</v-btn> 
               </v-card-actions>
             </v-card>
           </v-col>
@@ -87,7 +81,9 @@ export default {
   },
   created() {
     let time = this.$store.state.OB_Time * 1000;
-    const observer = setInterval(() => {this.setLiveInfo(this.oid)}, time);
+    const observer = setInterval(() => {
+      this.setLiveInfo(this.oid);
+    }, time);
     this.$once("hook:beforeDestroy", () => {
       clearInterval(observer);
     });
@@ -96,16 +92,10 @@ export default {
     //this.playLive(this.playLive++);
   },
   mounted() {
-    this.getLiveUri(this.oid);
-    setTimeout(() => {
-      if (this.live_url != "") {
-        console.log(this.live_url);
-        this.playLive(this.live_url)
-      }
-    }, 1000);
+    this.getLiveUri(this.oid, true);
   },
   methods: {
-    getLiveUri(oid) {
+    getLiveUri(oid, isPlayLive = false) {
       let r;
       hrequest(
         `https://api.live.bilibili.com/room/v1/Room/playUrl?cid=${oid}&quality=4&platform=web&otype=json`,
@@ -114,7 +104,9 @@ export default {
           console.log(r);
           if (r.code == 0) {
             this.live_url = r.data.durl[0].url;
-            console.log(r);
+            if (isPlayLive) {
+              this.playLive(this.live_url);
+            }
           } else {
             this.live_url = "";
           }
@@ -129,7 +121,6 @@ export default {
         `https://api.live.bilibili.com/room/v1/Room/get_info?room_id=${oid}`,
         (error, response, body) => {
           body = JSON.parse(body);
-          console.log(body);
           let d = body.data;
           oi.title = d.title;
           oi.isLive = d.live_status == 1 ? "直播" : "离线";
@@ -150,7 +141,6 @@ export default {
     },
     playLive(uri) {
       if (flvjs.isSupported()) {
-        console.log(this.obInfo.live_url, "LiveUrl");
         if (this.obInfo.live_url != "") {
           let videoElement = document.getElementById("videoElement");
           let flvPlayer = flvjs.createPlayer({
@@ -159,7 +149,6 @@ export default {
             hasAudio: false,
             url: uri
           });
-          console.log(flvPlayer, "flv对象");
           flvPlayer.attachMediaElement(videoElement);
           flvPlayer.load();
           flvPlayer.play();

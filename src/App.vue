@@ -9,9 +9,14 @@
         scroll-target="#scrolling-techniques-7"
         class="app-nav"
       >
-        <v-app-bar-nav-icon v-show="$route.path != '/'" to="/">
-          <v-icon>mdi-home</v-icon>
-        </v-app-bar-nav-icon>
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-app-bar-nav-icon v-show="$route.path != '/'" to="/" v-on="on">
+              <v-icon>mdi-home</v-icon>
+            </v-app-bar-nav-icon>
+          </template>
+          <span>回到首页</span>
+        </v-tooltip>
 
         <v-toolbar-title>BiliLiveObserver</v-toolbar-title>
 
@@ -76,9 +81,7 @@
       >
         <router-view></router-view>
       </v-sheet>
-      <v-snackbar v-model="snackbar" top>
-        {{ snacktext }}
-      </v-snackbar>
+      <v-snackbar v-model="snackbar" top>{{ snacktext }}</v-snackbar>
     </v-card>
   </v-app>
 </template>
@@ -92,16 +95,16 @@ export default {
     return {
       drawer: false,
       snackbar: false,
-      snacktext: "Information.",
+      snacktext: "Information."
     };
   },
   components: {},
   methods: {
     exitApp() {
-      ipc.send('close')
+      ipc.send("close");
     },
-    minisizeApp(){
-      ipc.send('min')
+    minisizeApp() {
+      ipc.send("min");
     },
     onWebsite(url, isNewWindow = false) {
       isNewWindow;
@@ -115,11 +118,11 @@ export default {
   },
   created() {
     req("https://api.live.bilibili.com/sign/GetSignInfo", (e, r, b) => {
-      b = JSON.parse(b)
-      console.log(b)
+      b = JSON.parse(b);
+      console.log(b);
       if (b.code != 0) {
-        this.snacktext = "账号未登陆，可能会影响到部分功能的使用。"
-        this.snackbar = true
+        this.snacktext = "账号未登陆，可能会影响到部分功能的使用。";
+        this.snackbar = true;
       }
     });
   }
