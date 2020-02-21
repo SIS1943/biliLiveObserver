@@ -3,7 +3,7 @@
     <v-card class="app-window">
       <v-app-bar
         absolute
-        color="teal"
+        color="primary"
         dark
         elevate-on-scroll
         scroll-target="#scrolling-techniques-7"
@@ -11,11 +11,19 @@
       >
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-app-bar-nav-icon v-show="$route.path != '/'" to="/" v-on="on" >
+            <v-app-bar-nav-icon v-show="false" to="/" v-on="on" >
               <v-icon>mdi-home</v-icon>
             </v-app-bar-nav-icon>
           </template>
           <span>回到首页</span>
+        </v-tooltip>
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-app-bar-nav-icon v-show="$route.path != '/'" v-on="on" @click="$router.back()">
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-app-bar-nav-icon>
+          </template>
+          <span>返回 </span>
         </v-tooltip>
 
         <v-toolbar-title>BiliLiveObserver</v-toolbar-title>
@@ -27,7 +35,7 @@
               <v-icon>mdi-cogs</v-icon>
             </v-btn>
           </template>
-          <span>设置</span>
+          <span>设置</span> 
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
