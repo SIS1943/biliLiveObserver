@@ -30,23 +30,20 @@ function biliapi (comm, params = {}, cookie = ''){
         reqParams.url = command.uri;
         reqParams.method = command.method;
 
-        if(command.params){//该API是否需要params
+        if(Object.keys(command.params).length != 0){//该API是否需要params
             if(command.isCookie){//该API是否需要传递Cookie
                 reqParams.cookie = cookie;
             }
             //对params进行比对与解析。
             if(params && params instanceof Object){
                 if(params.length == command.method.length){
-                    if(Object.getOwnPropertyNames(params).toString == Object.getOwnPropertyNames(command.params)){
+                    if(Object.keys(params).toString == Object.keys(command.params)){
                         reqParams.params = params
-                    }else{
-                        //属性不一致
+                    }else{//属性不一致
                     }
-                }else{
-                    //长度不一致
+                }else{//长度不一致
                 }
-            }else{
-                //不是一个Object。
+            }else{//不是一个Object。
             }
         }else{//不需要params，直接梭。
         }

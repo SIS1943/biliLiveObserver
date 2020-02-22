@@ -27,7 +27,11 @@ const biliApis = {
         }
     }
 }
-
+/**
+ * 笔记/想法
+ * 
+ * 对于GET模式的params，可以将其JSON.stringify，去掉'{'、'}'、' " '，然后将 ',' 替换为 '&' ；':' 替换为'=' 。
+ */
 export default {
     biliApis
 }
