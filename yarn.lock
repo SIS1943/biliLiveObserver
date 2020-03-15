@@ -1073,7 +1073,7 @@
     lodash.mapvalues "^4.6.0"
     lodash.transform "^4.6.0"
     mini-css-extract-plugin "^0.9.0"
-    minimist "^1.2.0"
+    minimist "^1.2.2"
     pnp-webpack-plugin "^1.6.0"
     portfinder "^1.0.25"
     postcss-loader "^3.0.0"
@@ -1317,7 +1317,7 @@ acorn@^6.0.7, acorn@^6.2.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.1.tgz#531e58ba3f51b9dacb9a6646ca4debf5b14ca474"
   integrity sha512-ZVA9k326Nwrj3Cj9jlh3wGFutC2ZornPNARZwsNYqQYgN0EsV2d53w5RN/co65Ohn4sUAUtb1rSUAOD6XN9idA==
 
-acorn@^7.1.0:
+acorn@^7.1.1:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/acorn/download/acorn-7.1.0.tgz#949d36f2c292535da602283586c2477c57eb2d6c"
   integrity sha1-lJ028sKSU12mAig1hsJHfFfrLWw=
