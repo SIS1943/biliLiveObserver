@@ -23,7 +23,7 @@
               <v-icon>mdi-chevron-left</v-icon>
             </v-app-bar-nav-icon>
           </template>
-          <span>返回 </span>
+          <span>返回</span>
         </v-tooltip>
 
         <v-toolbar-title>BiliLiveObserver</v-toolbar-title>
@@ -89,7 +89,7 @@
       >
         <router-view></router-view>
       </v-sheet>
-      <v-snackbar v-model="snackbar" bottom right>{{ snacktext }}</v-snackbar>
+      <v-snackbar v-model="snackbar" top>{{ snacktext }}</v-snackbar>
     </v-card>
   </v-app>
 </template>

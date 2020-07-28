@@ -2,8 +2,8 @@
   <v-row class="app-setting">
     <v-col cols="3">
       <v-list>
-        <v-list-item-group v-model="item" color="primary">
-          <v-list-item v-for="(item, i) in items" :key="i">
+        <v-list-item-group color="primary">
+          <v-list-item v-for="(item, i) in settings" :key="i" :to="item.to" replace>
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -15,9 +15,7 @@
       </v-list>
     </v-col>
     <v-col>
-        <div class="app-setting-box">
-            2333
-        </div>
+      <router-view class="app-setting-box"></router-view>
     </v-col>
   </v-row>
 </template>
@@ -26,13 +24,13 @@
 export default {
   data: () => ({
     item: 1,
-    items: [
-      { text: "本体", icon: "mdi-monitor" },
-      { text: "下载", icon: "mdi-download" },
-      { text: "观测", icon: "mdi-looks" },
-      { text: "关于", icon: "mdi-information" },
-    ]
-  })
+    settings: [
+      { text: "本体", icon: "mdi-monitor", to: "/setting/app" },
+      { text: "下载", icon: "mdi-download", to: "/setting/download" },
+      { text: "观测", icon: "mdi-looks", to: "/setting/observer" },
+      { text: "关于", icon: "mdi-information", to: "/setting/about" },
+    ],
+  }),
 };
 </script>
 
@@ -43,8 +41,14 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
+  background-image: url("/lib/defBG.jpg");
+  background-position: center;
+  background-size: cover;
 }
-.app-setting .app-setting-box{
-    padding: 16px 0;
+.app-setting .v-list{
+  height: 100vh;
+}
+.app-setting .app-setting-box {
+  padding: 16px 0;
 }
 </style>

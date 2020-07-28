@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, Menu, ipcMain, shell } from 'electron'
 import {
   createProtocol,
   /* installVueDevtools */
@@ -19,15 +19,15 @@ function createWindow() {
   Menu.setApplicationMenu(null)
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1122,
-    height: 700,
+    width: 1222,
+    height: 800,
     fullscreenable: false,
     minimizable: false,
     maximizable: false,
     resizable: false,
     frame: false,
     webPreferences: {
-      devTools: false,
+      // devTools: false,
       nodeIntegration: true,
       webSecurity: false,
       webviewTag: true,
@@ -70,6 +70,13 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+app.on('web-contents-created', (e, webContents) => {
+  webContents.on('new-window', (event, url) => {
+      event.preventDefault();
+      shell.openExternal(url);
+  });
+});
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
