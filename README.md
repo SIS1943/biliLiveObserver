@@ -15,6 +15,8 @@
 
 目前未放出已编译版本，需要自行使用Electron编译；目前只使用了单腿人模式（主要是DD版的界面还没做完）。输入房间号，点击“开始观测”即可~~食用~~使用。
 
+![img1](https://cdn.jsdelivr.net/gh/lipraty/bililiveobserver/github/img1.png "DD房间效果")
+
 ## 技术栈
 
 分类 | 技术
